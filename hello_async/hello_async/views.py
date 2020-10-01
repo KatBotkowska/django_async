@@ -21,7 +21,13 @@ def http_call_sync():
         print(num)
     r = httpx.get("https://httpbin.org/")
     print(r)
+async def smoke(smokables: List[str] = None, flavor: str='Sweet Baby ray\'s')->List[str]:
+    for smokable in smokables:
+        print(f'Smoking some {smokable}...')
+        print(f'Appying the {flavor}...')
+        print(f'{smokable.capitalize()} smoked')
 
+return len(smokables)
 #views
 
 async def index(request):
