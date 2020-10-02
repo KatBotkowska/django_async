@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import index,async_view, sync_view, smoke_some_meats
+from .views import index, async_view, sync_view, smoke_some_meats
+
 app_name = 'hello_async'
 urlpatterns = [
     path('admin/', admin.site.urls),
