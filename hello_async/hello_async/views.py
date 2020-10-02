@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 import asyncio
 from time import sleep
+from typing import List
 import httpx
+import random
 
 
 
@@ -27,7 +29,41 @@ async def smoke(smokables: List[str] = None, flavor: str='Sweet Baby ray\'s')->L
         print(f'Appying the {flavor}...')
         print(f'{smokable.capitalize()} smoked')
 
-return len(smokables)
+    return len(smokables)
+
+async def get_smokables():
+    print('Getting smokables...')
+
+    await asyncio.sleep(2)
+    async with httpx.AsyncClient() as client:
+        await client.get('https://httpbin.org')
+
+        print('returning smokeable')
+        return [
+            'ribs',
+            'brisket',
+            'lemon chicken',
+            'salmon',
+            'bison sirloin',
+            'sausage'
+        ]
+
+async def get_flavor():
+    print('getting flavor...')
+
+    await asyncio.sleep(1)
+    async with httpx.AsyncClient() as client:
+        await client.get('https://httpbin.org')
+
+        print('returning flavor')
+        return random.choice(
+            [
+                'sweet baby ray\'s'
+                'stubbs original',
+                'famous dave',
+            ]
+        )
+
 #views
 
 async def index(request):
@@ -41,3 +77,8 @@ async def async_view(request):
 def sync_view(request):
     http_call_sync()
     return HttpResponse('blocking http request')
+
+async def smoke_some_meats(request):
+    results = await asyncio.gather(*[get_smokables(), get_flavor()])
+    total = await asyncio.gather(*[smoke(results[0], results[1])])
+    return HttpResponse(f'smoked {total[0]} meats with {results[1]}!')

@@ -20,7 +20,7 @@ from .views import index,async_view, sync_view, smoke_some_meats
 app_name = 'hello_async'
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('smoke_some_meats/',smoke_some_meats),
+    path('smoke_some_meats/', smoke_some_meats),
     path('async/', async_view),
     path('sync/', sync_view),
     path("", index),
